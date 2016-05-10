@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AsteroidGameRedone.Models
 {
-    public class LaserShot
+    public class Asteroid
     {
         public static Texture2D Texture;
 
@@ -16,33 +16,41 @@ namespace AsteroidGameRedone.Models
         {
             get
             {
-                return new Rectangle(posX, posY, Texture.Bounds.Width, Texture.Bounds.Height);
+                return new Rectangle(posX, posY, width, height);
             }
         }
 
-        private int posX, posY; 
+        private int posX, posY, width, height;
 
-        public LaserShot(int x, int y)
+        private int hitPoints;
+
+        public Asteroid(int x, int y, int w, int h, int hp)
         {
             posX = x;
             posY = y;
+            width = w;
+            height = h;
+            hitPoints = hp;
         }
 
-        public void Move()
+        public void Move(Random rnd)
         {
-            if (this.posY > 0 - Texture.Bounds.Height)
-            {
-                this.posY -= 15;
-            }
-            else
-            {
-                
-            }
+            posY += rnd.Next(0, 5);
+        }
+
+        public void Explode()
+        {
+
         }
 
         public void Update()
         {
-            Move();
+
+        }
+
+        public void Draw()
+        {
+
         }
     }
 }

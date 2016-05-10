@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 
 namespace AsteroidGameRedone.Models
 {
-    class Spaceship
+    public class Spaceship
     {
         public Texture2D Texture;
-        public Texture2D TextureLaser;
 
         private int posX, posY, width, height;
 

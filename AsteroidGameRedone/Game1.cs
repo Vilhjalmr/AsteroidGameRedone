@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace AsteroidGameRedone
 {
@@ -13,9 +15,12 @@ namespace AsteroidGameRedone
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Random rnd;
+
         Spaceship Ship;
 
         Texture2D background;
+        List<Asteroid> Asteroids;
 
         public Game1()
         {
@@ -40,6 +45,7 @@ namespace AsteroidGameRedone
         {
             // TODO: Add your initialization logic here
             Ship = new Spaceship(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight - graphics.PreferredBackBufferHeight / 10, 50, 50);
+            Asteroids = new List<Asteroid>();
 
             base.Initialize();
         }
@@ -54,8 +60,11 @@ namespace AsteroidGameRedone
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            rnd = new Random();
+
             Ship.Texture = Content.Load<Texture2D>("spaceship");
             LaserShot.Texture = Content.Load<Texture2D>("lasershot2");
+            Asteroid.Texture = Content.Load<Texture2D>("spaceship");
             background = Content.Load<Texture2D>("background");
         }
 
@@ -84,6 +93,17 @@ namespace AsteroidGameRedone
 
             Ship.Update(state, this.graphics);
 
+            if (state.IsKeyDown(Keys.LeftAlt))
+            {
+                Asteroid ast = new Asteroid(rnd.Next(0, graphics.PreferredBackBufferWidth-60), 0 - Asteroid.Texture.Bounds.Height, 60, 60, 5);
+                Asteroids.Add(ast);
+            }
+
+            foreach (var item in Asteroids)
+            {
+                item.Move(rnd);
+            }
+
             base.Update(gameTime);
         }
 
@@ -99,6 +119,11 @@ namespace AsteroidGameRedone
             spriteBatch.Begin();
 
             spriteBatch.Draw(background, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
+
+            foreach (var item in Asteroids)
+            {
+                spriteBatch.Draw(Asteroid.Texture, item.Position, Color.White);
+            }
 
             Ship.Draw(spriteBatch);
 

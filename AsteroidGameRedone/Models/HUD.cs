@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace AsteroidGameRedone.Models
 {
-    public enum Direction
+    public class HUD
     {
-        Up, Down, Left, Right
     }
 }

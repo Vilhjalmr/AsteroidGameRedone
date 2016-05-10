@@ -39,8 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="Models\Asteroid.cs" />
     <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\HUD.cs" />
     <Compile Include="Models\LaserShot.cs" />
+    <Compile Include="Models\Level.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Spaceship.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
