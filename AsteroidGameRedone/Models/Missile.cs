@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AsteroidGameRedone.Models
 {
-    public class LaserShot : Weapon
-    { 
-        public LaserShot(int x, int y, Texture2D _texture)
+    public class Missile : Weapon
+    {
+        public Missile (int x, int y, Texture2D _texture)
         {
             posX = x;
             posY = y;
@@ -21,11 +20,11 @@ namespace AsteroidGameRedone.Models
         {
             if (this.posY > 0 - Texture.Bounds.Height)
             {
-                this.posY -= 15;
+                this.posY -= 7;
             }
             else
             {
-                
+
             }
         }
 

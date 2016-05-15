@@ -12,9 +12,12 @@ namespace AsteroidGameRedone.Models
 {
     public class Spaceship
     {
-        public Texture2D Texture;
+        public Texture2D ShipTexture;
+        public Texture2D LaserTexture, MissileTexture;
 
         private int posX, posY, width, height;
+
+        private ContentManager Content;
 
         public Rectangle Position
         {
@@ -24,18 +27,19 @@ namespace AsteroidGameRedone.Models
             }
         }
 
-        public List<LaserShot> Lasershots { get; set; }
-
-
+        public List<Weapon> Shots { get; set; }
 
         // CONSTRUCTOR
-        public Spaceship(int x, int y, int w, int h)
+        public Spaceship(int x, int y, int _width, int _height, ContentManager _content)
         {
             posX = x;
             posY = y;
-            width = w;
-            height = h;
-            Lasershots = new List<LaserShot>();
+            width = _width;
+            height = _height;
+            Shots = new List<Weapon>();
+            ShipTexture = _content.Load<Texture2D>("spaceship");
+            LaserTexture = _content.Load<Texture2D>("lasershot2");
+            MissileTexture= _content.Load<Texture2D>("missile");
         }
 
         /** METHODS **/
@@ -91,10 +95,18 @@ namespace AsteroidGameRedone.Models
               }
         }
 
-        public void Shoot()
+        public void ShootLaser()
         {
-            LaserShot Shot = new LaserShot((this.posX + (this.width / 2) - (LaserShot.Texture.Bounds.Width/2)), this.posY);
-            Lasershots.Add(Shot);
+            LaserShot LeftLS= new LaserShot((this.posX + (this.width / 2) - (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY, LaserTexture);
+            LaserShot RightLS = new LaserShot((this.posX + (this.width / 2) + (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY, LaserTexture);
+            Shots.Add(LeftLS);
+            Shots.Add(RightLS);
+        }
+
+        public void ShootMissile()
+        {
+            Missile Missile = new Missile((this.posX + (this.width / 2) - (MissileTexture.Bounds.Width / 2)), this.posY, MissileTexture);
+            Shots.Add(Missile);
         }
 
         public void Explode()
@@ -124,20 +136,24 @@ namespace AsteroidGameRedone.Models
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                Shoot();
+                ShootLaser();
             }
-            foreach (LaserShot laser in Lasershots)
+            if (state.IsKeyDown(Keys.LeftControl))
             {
-                laser.Update();
+                ShootMissile();
+            }
+            foreach (Weapon weapon in Shots)
+            {
+                weapon.Update();
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, Color.White);
-            foreach (LaserShot laser in Lasershots)
+            spriteBatch.Draw(ShipTexture, Position, Color.White);
+            foreach (Weapon weapon in Shots)
             {
-                spriteBatch.Draw(LaserShot.Texture, laser.Position, Color.White);
+                spriteBatch.Draw(weapon.Texture, weapon.Position, Color.White);
             }
 
         }

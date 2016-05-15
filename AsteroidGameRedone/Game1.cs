@@ -44,7 +44,7 @@ namespace AsteroidGameRedone
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Ship = new Spaceship(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight - graphics.PreferredBackBufferHeight / 10, 50, 50);
+            Ship = new Spaceship(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight - graphics.PreferredBackBufferHeight / 10, 50, 50, this. Content);
             Asteroids = new List<Asteroid>();
 
             base.Initialize();
@@ -62,8 +62,6 @@ namespace AsteroidGameRedone
             // TODO: use this.Content to load your game content here
             rnd = new Random();
 
-            Ship.Texture = Content.Load<Texture2D>("spaceship");
-            LaserShot.Texture = Content.Load<Texture2D>("lasershot2");
             Asteroid.Texture = Content.Load<Texture2D>("spaceship");
             background = Content.Load<Texture2D>("background");
         }

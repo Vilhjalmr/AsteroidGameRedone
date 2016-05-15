@@ -44,8 +44,10 @@
     <Compile Include="Models\HUD.cs" />
     <Compile Include="Models\LaserShot.cs" />
     <Compile Include="Models\Level.cs" />
+    <Compile Include="Models\Missile.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Spaceship.cs" />
+    <Compile Include="Models\Weapon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
