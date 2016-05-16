@@ -15,9 +15,11 @@ namespace AsteroidGameRedone.Models
         public Texture2D ShipTexture;
         public Texture2D LaserTexture, MissileTexture;
 
-        private int posX, posY, width, height;
+        private Int32 posX, posY, width, height;
 
         private ContentManager Content;
+
+        private Boolean MissileFired = false;
 
         public Rectangle Position
         {
@@ -37,8 +39,8 @@ namespace AsteroidGameRedone.Models
             width = _width;
             height = _height;
             Shots = new List<Weapon>();
-            ShipTexture = _content.Load<Texture2D>("spaceship");
-            LaserTexture = _content.Load<Texture2D>("lasershot2");
+            ShipTexture = _content.Load<Texture2D>("player1");
+            LaserTexture = _content.Load<Texture2D>("lase");
             MissileTexture= _content.Load<Texture2D>("missile");
         }
 
@@ -97,8 +99,8 @@ namespace AsteroidGameRedone.Models
 
         public void ShootLaser()
         {
-            LaserShot LeftLS= new LaserShot((this.posX + (this.width / 2) - (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY, LaserTexture);
-            LaserShot RightLS = new LaserShot((this.posX + (this.width / 2) + (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY, LaserTexture);
+            LaserShot LeftLS= new LaserShot((this.posX + (this.width / 2) - (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY-(this.height/3), LaserTexture);
+            LaserShot RightLS = new LaserShot((this.posX + (this.width / 2) + (this.width / 3 ) - (LaserTexture.Bounds.Width/2)), this.posY - (this.height / 3), LaserTexture);
             Shots.Add(LeftLS);
             Shots.Add(RightLS);
         }
@@ -138,9 +140,14 @@ namespace AsteroidGameRedone.Models
             {
                 ShootLaser();
             }
-            if (state.IsKeyDown(Keys.LeftControl))
+            if (state.IsKeyDown(Keys.LeftControl) && !MissileFired
             {
                 ShootMissile();
+                MissileFired = true;
+            }
+            if (state.IsKeyUp(Keys.LeftControl))
+            {
+                MissileFired = false;
             }
             foreach (Weapon weapon in Shots)
             {
