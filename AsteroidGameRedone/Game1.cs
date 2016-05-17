@@ -17,6 +17,7 @@ namespace AsteroidGameRedone
 
         Random rnd;
 
+        HUD GameHUD;
         Spaceship Ship;
 
         Texture2D background;
@@ -44,6 +45,8 @@ namespace AsteroidGameRedone
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            GameHUD= new HUD(this.Content);
+
             Ship = new Spaceship(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight - graphics.PreferredBackBufferHeight / 10, 50, 50, this. Content);
             Asteroids = new List<Asteroid>();
 
@@ -97,10 +100,17 @@ namespace AsteroidGameRedone
                 Asteroids.Add(ast);
             }
 
-            foreach (var item in Asteroids)
+            foreach (Asteroid ast in Asteroids)
             {
-                item.Move(rnd);
+                ast.Update(rnd, Ship);
+                ast.Move(rnd);
+
             }
+            if (state.IsKeyDown(Keys.C))
+            {
+                GameHUD.Update(100);
+            }
+
 
             base.Update(gameTime);
         }
@@ -117,10 +127,12 @@ namespace AsteroidGameRedone
             spriteBatch.Begin();
 
             spriteBatch.Draw(background, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
+            GameHUD.Draw(this.spriteBatch, this.graphics);
 
-            foreach (var item in Asteroids)
+            
+            foreach (Asteroid ast in Asteroids)
             {
-                spriteBatch.Draw(Asteroid.Texture, item.Position, Color.White);
+                spriteBatch.Draw(Asteroid.Texture, ast.Position, Color.White);
             }
 
             Ship.Draw(spriteBatch);

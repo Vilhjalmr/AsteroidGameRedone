@@ -76,7 +76,7 @@ namespace AsteroidGameRedone.Models
                 case Direction.Left:
                     if ((this.posX - 5) > 0)
                     {
-                        posX -= 5;
+                        posX -= 3;
                         break;
                     }
                     else
@@ -87,7 +87,7 @@ namespace AsteroidGameRedone.Models
                 case Direction.Right:
                     if ((this.posX + 5) + width < xMax)
                     {
-                        posX += 5;
+                        posX += 3;
                         break;
                     }
                     else
@@ -140,7 +140,7 @@ namespace AsteroidGameRedone.Models
             {
                 ShootLaser();
             }
-            if (state.IsKeyDown(Keys.LeftControl) && !MissileFired
+            if (state.IsKeyDown(Keys.LeftControl) && !MissileFired)
             {
                 ShootMissile();
                 MissileFired = true;

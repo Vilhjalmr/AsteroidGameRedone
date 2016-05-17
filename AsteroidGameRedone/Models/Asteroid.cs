@@ -11,7 +11,15 @@ namespace AsteroidGameRedone.Models
     public class Asteroid
     {
         public static Texture2D Texture;
+        /* Fait par oli
+        private Game1 game;
 
+        public Game1 Game
+        {
+            get { return game; }
+            set { game = value; }
+        }
+        */
         public Rectangle Position
         {
             get
@@ -26,6 +34,7 @@ namespace AsteroidGameRedone.Models
 
         public Asteroid(int x, int y, int w, int h, int hp)
         {
+            // Oli this.game = game;
             posX = x;
             posY = y;
             width = w;
@@ -43,9 +52,18 @@ namespace AsteroidGameRedone.Models
 
         }
 
-        public void Update()
+        public void Update(Random rnd, Spaceship ship)
         {
-
+            Move(rnd);
+            foreach (Weapon weapon in ship.Shots)
+            {
+                if (this.Position.Intersects(weapon.Position))
+                {
+                    // Remove shot, destroy asteroid, increment score by asteroid's value
+                    Explode();
+                }
+            }
+            
         }
 
         public void Draw()
